@@ -1,7 +1,7 @@
 # STOCK CONTROL CLI
 [![Ruby](https://img.shields.io/badge/Ruby-v3.2-red)](https://www.ruby-lang.org/)
 
-Este repositório foi criado para fins de estudo, com o objetivo de praticar e aprofundar os conhecimentos na base da linguagem Ruby. A criação e o conteúdo estão sendo orientados por mentoria.
+Este repositório foi criado para fins de estudo, com o objetivo de praticar e aprofundar os conhecimentos na base da linguagem Ruby. A criação e o conteúdo estão sendo orientados pela mentoria de [Rodrigo Pimentel Sátyro Xita](https://github.com/users/atenente/projects/1](https://github.com/xitarps)).
 
 ## 🚀 Como Rodar o Projeto
    ```bash
