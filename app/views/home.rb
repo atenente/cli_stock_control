@@ -1,38 +1,23 @@
-require_relative '../models/product_model'
-require_relative '../views/product_view'
-require_relative '../controllers/product_controller'
+ROOT_PATH = File.expand_path('..', __dir__)
+Dir.glob("#{ROOT_PATH}/**/*.rb").each do |file|
+  next if file == __FILE__
+
+  require file
+end
 
 class App
   def initialize
     @controller = ProductController.new
+    @menu = Menu.new(@controller)
   end
 
   def start
     loop do
       App.display_message("Menu de opções:".center(50, '*'))
-      puts "1. Criar Product"
-      puts "2. Ver Products"
-      puts "3. Atualizar Product"
-      puts "4. Deletar Product"
-      puts "5. Sair"
+      @menu.options.each {|option| puts option.last[:desc]}
       print "Digite o numero da opção > "
       choice = gets.to_i
-
-      case choice
-      when 1
-        @controller.create
-      when 2
-        @controller.read
-      when 3
-        @controller.update
-      when 4
-        @controller.delete
-      when 5
-        puts "Saindo..."
-        break
-      else
-        puts "Opção não encontrada"
-      end
+      @menu.options[choice][:action].call
     end
   end
 
