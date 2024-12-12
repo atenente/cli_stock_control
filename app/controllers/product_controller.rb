@@ -22,10 +22,8 @@ class ProductController
 
   def update
     id = @view_product.ask_id
-    product = Product.find(id)
-    if product
-      desc, price, stock = @view_product.ask_update
-      product.update(desc, price, stock)
+    desc, price, stock = @view_product.ask_update
+    if Product.update(id, desc, price, stock)
       App.display_message("Product alterado")
     else
       App.display_message("Nenhum product encontrado".center(50, '*'))
@@ -34,9 +32,7 @@ class ProductController
 
   def delete
     id = @view_product.ask_id
-    product = Product.find(id)
-    if product
-      product.delete
+    if Product.delete(id)
       App.display_message("Product deletado.")
     else
       App.display_message("Product não encontrado")
