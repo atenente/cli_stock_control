@@ -9,5 +9,6 @@ class Menu
       4 => {desc: '4. Deletar Product',   action: -> {controller.delete}}
     }
     @options.default = {desc: nil, action: -> { puts "Option Invalid"}}
+    #hash.fetch(:c){puts 'invalid'} 
   end
 end
