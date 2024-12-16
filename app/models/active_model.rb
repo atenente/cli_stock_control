@@ -1,4 +1,4 @@
-class ActiveModel < CsvHandler
+class ActiveModel < ArrayHandler
   def all
     super
   end
