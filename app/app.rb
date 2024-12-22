@@ -1,9 +1,4 @@
-ROOT_PATH = File.expand_path('..', __dir__)
-Dir.glob("#{ROOT_PATH}/**/*.rb").each do |file|
-  next if file == __FILE__
-
-  require file
-end
+require_relative '../config/initializers'
 
 class App
   def initialize

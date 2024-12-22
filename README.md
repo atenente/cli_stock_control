@@ -7,5 +7,5 @@ Este repositório foi criado para fins de estudo, com o objetivo de praticar e a
    ```bash
    git clone https://github.com/atenente/stock_control_cli.git
    cd ./cli_stock_control
-   ruby ./app/views/home.rb
+   ruby ./app/app.rb
 
