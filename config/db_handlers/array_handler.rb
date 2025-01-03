@@ -43,7 +43,7 @@ class ArrayHandler
 
   def save
     File.open(FILE_PATH, "a") do |txt|
-      txt << "#{id}, #{desc}, #{price}, #{stock}\n"
+      txt << "#{id},#{desc},#{price},#{stock}\n"
     end
   end
 end
