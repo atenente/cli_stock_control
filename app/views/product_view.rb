@@ -3,7 +3,7 @@ class ProductView
     App.display_message("Lista de Todos Products".center(50, '*'))
     puts "ID\tDesc\tPrice\tStock"
     products.each do |product|
-      puts "#{product.id}\t#{product.desc}\t#{product.price}\t#{product.stock}"
+      puts "#{product[:id]}\t#{product[:desc]}\t#{product[:price]}\t#{product[:stock]}"
     end
   end
 
