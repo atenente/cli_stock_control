@@ -2,6 +2,7 @@ require_relative '../config/db_handlers/csv_handler.rb'
 require_relative '../config/db_handlers/array_handler.rb'
 require_relative '../config/db_handlers/postgres_handler.rb'
 require_relative '../app/models/active_model.rb'
+require_relative '../app/helpers/application_helper.rb'
 require  'byebug'
 
 ROOT_PATH = File.expand_path('..', __dir__)
