@@ -1,4 +1,4 @@
-class ActiveModel < ArrayHandler
+class ActiveModel < PostgresHandler
   def all
     super
   end
