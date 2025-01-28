@@ -1,53 +1,65 @@
 class PostgresHandler
 
+  def self.table_name
+    ApplicationHelper.pluralize(self.name.downcase)
+  end
+
   def self.all
     Database.execute_sql(%{
-      SELECT * FROM products
-    }).map do |product|
+      SELECT * FROM #{table_name}
+    }).map do |data|
       #altera o hash para ficar no formato da view
-      product.each_with_object({}) do |(key, value), products|
-        products[key.to_sym] = value
+      data.each_with_object({}) do |(key, value), itens|
+        itens[key.to_sym] = value
       end
     end
   end
 
-  def self.create
-    desc, price, stock = @view_product.ask_update
-    product = Product.new(desc, price, stock)
-    if product.save
-      App.display_message("Product creado!")
+  def self.update(**attributes)
+    return false if find_data(attributes[:id]).ntuples.zero?
+    data_type = {
+      String => ->(value) { "'#{value}'" },
+      Numeric => ->(value) { value.to_i },
+      Fixnum => ->(value) { value.to_i },
+      Float => ->(value) { value.to_f }
+    }
+    data_set = []
+    attributes.each do |key, value|
+      next if key == :id
+      data_set << "'#{key}' = #{data_type[value.class].call(value)}"
     end
-  end
-
-  def self.update(id, desc, price, stock)
-    return false if find_data(id).ntuples.zero?
     Database.execute_sql(%{
-      UPDATE products
-      SET
-        "desc" = '#{desc}',
-        price = #{price},
-        stock = #{stock}
-      WHERE
-        id = #{id}
+      UPDATE #{table_name}
+      SET #{data_set.join(',')}
+      WHERE id = #{attributes[:id]}
     })
   end
 
   def self.delete(id)
     return false if find_data(id).ntuples.zero?
     Database.execute_sql(%{
-      DELETE FROM products WHERE id = #{id}
+      DELETE FROM #{table_name} WHERE id = #{id}
     })
   end
 
   def self.find_data(id)
     Database.execute_sql(%{
-      SELECT * FROM products WHERE id = #{id}
+      SELECT * FROM #{table_name} WHERE id = #{id}
     })
   end
 
   def save
+    columns = []
+    values = []
+    self.instance_variables.each do |vari|
+      next if vari.to_s.include?('id')
+      columns << vari.to_s.delete('@')
+      values << self.instance_variable_get(vari)
+    end
     Database.execute_sql(%{
-      INSERT INTO products ("desc", price, stock) VALUES ('#{desc}', #{price}, #{stock})
+      INSERT INTO #{self.class.table_name}
+      (#{columns.join(', ')})
+      VALUES (#{values.join(', ')})
     })
   end
 
