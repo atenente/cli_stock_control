@@ -15,16 +15,23 @@ class PostgresHandler
     end
   end
 
-  def self.update(id, desc, price, stock)
-    return false if find_data(id).ntuples.zero?
+  def self.update(**attributes)
+    return false if find_data(attributes[:id]).ntuples.zero?
+    data_type = {
+      String => ->(value) { "'#{value}'" },
+      Numeric => ->(value) { value.to_i },
+      Fixnum => ->(value) { value.to_i },
+      Float => ->(value) { value.to_f }
+    }
+    data_set = []
+    attributes.each do |key, value|
+      next if key == :id
+      data_set << "'#{key}' = #{data_type[value.class].call(value)}"
+    end
     Database.execute_sql(%{
       UPDATE #{table_name}
-      SET
-        "desc" = '#{desc}',
-        price = #{price},
-        stock = #{stock}
-      WHERE
-        id = #{id}
+      SET #{data_set.join(',')}
+      WHERE id = #{attributes[:id]}
     })
   end
 

@@ -23,7 +23,7 @@ class ProductController
   def update
     id = @view_product.ask_id
     desc, price, stock = @view_product.ask_update
-    if Product.update(id, desc, price, stock)
+    if Product.update(id: id, desc: desc, price: price, stock: stock)
       App.display_message("Product alterado")
     else
       App.display_message("Nenhum product encontrado".center(50, '*'))
